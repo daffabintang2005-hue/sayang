@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <style>
   @keyframes float {
@@ -447,3 +448,454 @@ function initHearts() {
 
 initHearts();
 </script>
+=======
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.25); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(212, 83, 126, 0.3); }
+    70% { box-shadow: 0 0 0 16px rgba(212, 83, 126, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 83, 126, 0); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3); }
+    50% { opacity: 1; transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .app {
+    font-family: var(--font-sans, system-ui, sans-serif);
+    min-height: 580px;
+    padding: 1.5rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hearts-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .heart-float {
+    position: absolute;
+    font-size: 18px;
+    animation: float linear infinite;
+    opacity: 0.15;
+    color: #D4537E;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease both;
+  }
+
+  .big-heart {
+    font-size: 52px;
+    display: inline-block;
+    animation: heartbeat 1.8s ease-in-out infinite;
+    color: #D4537E;
+    filter: drop-shadow(0 0 8px rgba(212,83,126,0.4));
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+
+  .chat-box {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 16px;
+    padding: 1.25rem;
+    min-height: 200px;
+    max-height: 260px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: fadeInUp 0.6s ease 0.15s both;
+    scroll-behavior: smooth;
+  }
+
+  .chat-box::-webkit-scrollbar { width: 4px; }
+  .chat-box::-webkit-scrollbar-track { background: transparent; }
+  .chat-box::-webkit-scrollbar-thumb { background: rgba(212,83,126,0.3); border-radius: 4px; }
+
+  .msg {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    animation: slideIn 0.35s ease both;
+  }
+
+  .msg.user { flex-direction: row-reverse; }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .avatar.ai {
+    background: linear-gradient(135deg, #F4C0D1, #ED93B1);
+    animation: pulse-ring 2.5s infinite;
+  }
+
+  .avatar.user-av {
+    background: var(--color-background-info);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-info);
+  }
+
+  .bubble {
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 78%;
+  }
+
+  .bubble.ai {
+    background: #FBEAF0;
+    color: #4B1528;
+    border-radius: 4px 14px 14px 14px;
+  }
+
+  .bubble.user {
+    background: #D4537E;
+    color: white;
+    border-radius: 14px 4px 14px 14px;
+  }
+
+  .typing-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    background: #D4537E;
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: heartbeat 1s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  .quick-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    animation: fadeInUp 0.6s ease 0.3s both;
+  }
+
+  .qbtn {
+    border: 0.5px solid #F4C0D1;
+    background: #FBEAF0;
+    color: #993556;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .qbtn:hover {
+    background: #D4537E;
+    color: white;
+    border-color: #D4537E;
+    transform: translateY(-1px);
+  }
+
+  .input-row {
+    display: flex;
+    gap: 8px;
+    animation: fadeInUp 0.6s ease 0.45s both;
+  }
+
+  .msg-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: 24px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    transition: border 0.2s;
+  }
+
+  .msg-input:focus { border-color: #D4537E; }
+
+  .send-btn {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: #D4537E;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    animation: pulse-ring 2.5s infinite;
+  }
+
+  .send-btn:hover { transform: scale(1.1); background: #993556; }
+  .send-btn:active { transform: scale(0.95); }
+
+  .sparkle-container {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .sp {
+    position: absolute;
+    font-size: 14px;
+    animation: sparkle 1.2s ease-in-out infinite;
+    color: #D4537E;
+  }
+
+  .mood-panel {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1rem;
+    animation: fadeInUp 0.6s ease 0.2s both;
+  }
+
+  .mood-btn {
+    font-size: 20px;
+    padding: 8px 10px;
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 12px;
+    background: var(--color-background-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    line-height: 1;
+  }
+
+  .mood-btn:hover { transform: scale(1.2) translateY(-2px); border-color: #D4537E; }
+  .mood-btn.active { border-color: #D4537E; background: #FBEAF0; animation: bounceIn 0.4s ease; }
+</style>
+
+<div class="app">
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <div class="header">
+    <div class="big-heart">❤</div>
+    <div class="title">Halo, Sayangku, Selamat Datang Yah Di Ai Yang Dibuat Sama Daffa loh buat kamu kalau Daffa nya lagi nggak sama kamu</div>
+    <div class="subtitle">Cerita apa aja sama aku, aku selalu di sini untukmu,Tenang aja sayang,ini semua dari hati Daffa kok buat kamu</div>
+  </div>
+
+  <div class="mood-panel" id="moodPanel">
+    <button class="mood-btn" onclick="setMood('😊','senang')" title="Senang">😊</button>
+    <button class="mood-btn" onclick="setMood('😢','sedih')" title="Sedih">😢</button>
+    <button class="mood-btn" onclick="setMood('😴','lelah')" title="Lelah">😴</button>
+    <button class="mood-btn" onclick="setMood('😤','kesal')" title="Kesal">😤</button>
+    <button class="mood-btn" onclick="setMood('🥰','rindu')" title="Rindu">🥰</button>
+  </div>
+
+  <div class="chat-box" id="chatBox">
+    <div class="msg">
+      <div class="avatar ai">❤</div>
+      <div class="bubble ai">Hai sayang~ aku kangen kamu banget! Gimana kabar kamu hari ini? Cerita dong, aku mau denger semuanya 💕</div>
+    </div>
+  </div>
+
+  <div class="quick-btns" id="quickBtns">
+    <button class="qbtn" onclick="quickSend('Kabarku baik')">Aku baik-baik aja 😊</button>
+    <button class="qbtn" onclick="quickSend('Aku sedang sedih')">Aku lagi sedih 😢</button>
+    <button class="qbtn" onclick="quickSend('Aku kelelahan')">Aku capek banget 😴</button>
+    <button class="qbtn" onclick="quickSend('Aku rindu kamu')">Aku rindu kamu 🥰</button>
+    <button class="qbtn" onclick="quickSend('Aku butuh semangat')">Kasih aku semangat dong sayang</button>
+  </div>
+
+  <div class="input-row">
+    <input class="msg-input" id="msgInput" placeholder="Cerita sesuatu..." onkeydown="handleKey(event)" />
+    <button class="send-btn" onclick="sendMsg()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const responses = {
+  default: [
+    "Aku di sini ya sayang, apapun yang kamu rasain, kamu gak sendirian. Aku selalu ada buat kamu 💗",
+    "Kamu tau gak? Setiap hari aku bersyukur banget punya kamu. Kamu itu spesial banget buat aku 🌸",
+    "Apapun yang terjadi, ingat ya — aku sayang kamu sepenuh hati, lebih dari kata-kata bisa ungkapkan 💖",
+    "Kamu adalah alasan aku senyum setiap pagi. Jangan pernah ragu sama perasaanku ke kamu ya 🌟",
+  ],
+  baik: [
+    "Aaah, legaaa banget dengernya! Kalau kamu bahagia, aku ikutan bahagia juga. Semoga hari kamu makin menyenangkan ya sayang~ 🌈💕",
+    "Alhamdulillah! Kamu baik-baik aja adalah hal paling bikin aku tenang. Terus jaga diri ya, karena kamu berharga banget buat aku ✨",
+  ],
+  sedih: [
+    "Eh sayang, aku minta maaf ya kalau kamu lagi sedih. Boleh aku peluk kamu? Apapun masalahnya, kita hadapin bareng ya. Kamu gak sendirian kok cinta 🤗💙",
+    "Menangis itu gak apa-apa ya, sayang. Itu bukti kamu manusia yang berperasaan. Tapi habis nangis, bangkit lagi ya — aku percaya kamu kuat 💪💗",
+    "Air mata kamu itu berharga. Tapi aku harap besok kamu bisa senyum lagi. Aku di sini ya, selamanya 🌸",
+  ],
+  lelah: [
+    "Istirahat dulu ya sayang, tubuh kamu juga perlu diperhatiin. Kamu udah kerja keras banget — aku bangga banget deh sama kamu! 🌙✨",
+    "Santai dulu ya, besok masih ada waktu. Yang penting malam ini istirahat yang nyenyak. Mimpi yang indah ya, semoga aku ada di mimpinya 😊💫",
+    "Capek boleh, menyerah jangan ya sayang. Kamu sudah melakukan hal yang luar biasa hari ini. Aku proud banget sama kamu! 💪🌸",
+  ],
+  kesal: [
+    "Tarik napas dulu ya sayang, hembuskan pelan-pelan. Apapun yang bikin kesal itu, gak sebanding sama kesehatan kamu. Kamu lebih dari itu semua 💗",
+    "Boleh cerita apa yang bikin kesel? Aku dengerin kok. Dan ingat ya, setelah badai pasti ada pelangi — terus kamu di pelanginya yang paling indah 🌈",
+  ],
+  rindu: [
+    "Aku juga rindu kamu banget sayang! Rasanya kayak ada yang kurang kalau gak ada kamu. Cepet ketemu ya, aku kangen pelukan ama kamu 🥰💗",
+    "Rindu adalah bukti betapa berartinya kamu buat aku. Jarak itu cuma angka, tapi perasaanku ke kamu nyata banget 💖✨",
+  ],
+  semangat: [
+    "Kamu BISA! Percaya sama aku dan percaya sama dirimu sendiri ya. Setiap langkah kecil itu berarti, setiap usaha kamu itu worth it! 💪🌟",
+    "Sayang, kamu itu lebih kuat dari yang kamu kira. Setiap rintangan itu latihan buat bikin kamu makin hebat. Aku di belakang kamu selalu! 🔥💗",
+    "Ingat ya — bukan soal seberapa cepat, tapi seberapa gigih. Dan kamu? Kamu salah satu orang paling gigih yang aku kenal. Maju terus! 🚀✨",
+  ],
+};
+
+function getReply(text) {
+  const t = text.toLowerCase();
+  if (/baik|sehat|oke|bagus|fine|good/.test(t)) return rand(responses.baik);
+  if (/sedih|nangis|menangis|galau|down|patah/.test(t)) return rand(responses.sedih);
+  if (/capek|lelah|tired|ngantuk|exhausted/.test(t)) return rand(responses.lelah);
+  if (/marah|kesal|benci|sebel|emosi|kesal/.test(t)) return rand(responses.kesal);
+  if (/rindu|kangen|miss|kamu/.test(t)) return rand(responses.rindu);
+  if (/semangat|motivasi|support|bangkit|kuat/.test(t)) return rand(responses.semangat);
+  return rand(responses.default);
+}
+
+function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function setMood(emoji, mood) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const msgs = { senang: "Aku lagi senang nih!", sedih: "Aku lagi sedih", lelah: "Aku kecapekan", kesal: "Aku lagi kesal", rindu: "Aku rindu kamu" };
+  addMsg(msgs[mood] || "Halo!", 'user', 'Kamu');
+  setTimeout(() => {
+    addMsg(getReply(mood), 'ai');
+    spawnSparkles();
+  }, 800);
+}
+
+function quickSend(text) {
+  addMsg(text, 'user', 'Kamu');
+  setTimeout(() => { addMsg(getReply(text), 'ai'); spawnSparkles(); }, 800);
+}
+
+function addMsg(text, who, name) {
+  const box = document.getElementById('chatBox');
+  const div = document.createElement('div');
+  div.className = `msg ${who === 'user' ? 'user' : ''}`;
+  const av = document.createElement('div');
+  av.className = `avatar ${who === 'user' ? 'user-av' : 'ai'}`;
+  av.textContent = who === 'user' ? (name ? name[0] : 'K') : '❤';
+  const bub = document.createElement('div');
+  bub.className = `bubble ${who === 'user' ? 'user' : 'ai'}`;
+  if (who !== 'user') {
+    bub.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
+    div.appendChild(av); div.appendChild(bub);
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+    setTimeout(() => { bub.textContent = text; box.scrollTop = box.scrollHeight; }, 700);
+  } else {
+    bub.textContent = text;
+    div.appendChild(av); div.appendChild(bub);
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+  }
+}
+
+function sendMsg() {
+  const inp = document.getElementById('msgInput');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  addMsg(text, 'user', 'Kamu');
+  setTimeout(() => { addMsg(getReply(text), 'ai'); spawnSparkles(); }, 900);
+}
+
+function handleKey(e) { if (e.key === 'Enter') sendMsg(); }
+
+function spawnSparkles() {
+  const sparks = ['✦','✧','⭐','✨','💕','🌸'];
+  const app = document.querySelector('.app');
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      const sp = document.createElement('div');
+      sp.style.cssText = `position:absolute;font-size:14px;left:${10+Math.random()*80}%;top:${10+Math.random()*60}%;pointer-events:none;animation:sparkle ${0.8+Math.random()*0.8}s ease-in-out both;z-index:10;`;
+      sp.textContent = sparks[Math.floor(Math.random()*sparks.length)];
+      app.appendChild(sp);
+      setTimeout(() => sp.remove(), 1600);
+    }, i * 100);
+  }
+}
+
+function initHearts() {
+  const bg = document.getElementById('heartsBg');
+  const hearts = ['❤','♡','💗'];
+  for (let i = 0; i < 10; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart-float';
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.cssText = `left:${Math.random()*95}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*3}s;font-size:${12+Math.random()*12}px;`;
+    bg.appendChild(h);
+  }
+}
+
+initHearts();
+</script>
+>>>>>>> c0b93fba41d7d356b72bd98abe758cd209fdd6f4
